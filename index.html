@@ -1,453 +1,232 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Weather App</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-</head>
-
-
-<body>
-
+  <body>
     <!-- ================= HEADER ================= -->
 
     <header class="header">
+      <div class="header-content">
+        <div class="logo">🌤️ Weather App</div>
 
-        <div class="header-content">
+        <div class="header-actions">
+          <button id="unitBtn" class="header-btn">°C / °F</button>
 
-            <div class="logo">
-                🌤️ Weather App
-            </div>
-
-
-            <div class="header-actions">
-
-                <button
-                    id="unitBtn"
-                    class="header-btn"
-                >
-                    °C / °F
-                </button>
-
-
-                <button
-                    id="themeBtn"
-                    class="header-btn"
-                >
-                    🌙
-                </button>
-
-            </div>
-
+          <button id="themeBtn" class="header-btn">🌙</button>
         </div>
-
+      </div>
     </header>
-
-
 
     <!-- ================= MAIN ================= -->
 
     <main class="container">
+      <!-- ================= SEARCH ================= -->
 
+      <section class="search-section">
+        <div class="search-box">
+          <span class="search-icon"> 🔍 </span>
 
-        <!-- ================= SEARCH ================= -->
-
-        <section class="search-section">
-
-            <div class="search-box">
-
-                <span class="search-icon">
-                    🔍
-                </span>
-
-                <input
-                    type="text"
-                    id="cityInput"
-                    placeholder="Search for a city..."
-                >
-
-            </div>
-
-
-            <button
-                id="searchBtn"
-                class="search-btn"
-            >
-                Search
-            </button>
-
-
-            <button
-                id="locationBtn"
-                class="location-btn"
-            >
-                📍 My Location
-            </button>
-
-        </section>
-
-
-
-        <!-- ================= ERROR MESSAGE ================= -->
-
-        <div
-            id="errorMessage"
-            class="error-message"
-        >
+          <input
+            type="text"
+            id="cityInput"
+            placeholder="Search for a city..."
+          />
         </div>
 
+        <button id="searchBtn" class="search-btn">Search</button>
 
+        <button id="locationBtn" class="location-btn">📍 My Location</button>
+      </section>
 
-        <!-- ================= CURRENT WEATHER ================= -->
+      <!-- ================= ERROR MESSAGE ================= -->
 
-        <section class="weather-card">
+      <div id="errorMessage" class="error-message"></div>
 
+      <!-- ================= CURRENT WEATHER ================= -->
 
-            <!-- Location -->
+      <section class="weather-card">
+        <!-- Location -->
 
-            <div class="location">
+        <div class="location">
+          <h1 id="cityName">Lahore, Pakistan</h1>
 
-                <h1 id="cityName">
-                    Lahore, Pakistan
-                </h1>
+          <p id="date">Friday, August 7, 2026</p>
+        </div>
 
+        <!-- Main Weather -->
 
-                <p id="date">
-                    Friday, August 7, 2026
-                </p>
+        <div class="weather-main">
+          <div class="weather-icon" id="weatherIcon">☀️</div>
 
-            </div>
+          <div class="temperature">
+            <h2 id="temperature">32°C</h2>
 
+            <p id="condition">Sunny</p>
+          </div>
+        </div>
 
+        <!-- High / Low -->
 
-            <!-- Main Weather -->
+        <div class="high-low">
+          <div class="temperature-box">
+            <span> ↑ High </span>
 
-            <div class="weather-main">
+            <strong id="highTemp"> 35°C </strong>
+          </div>
 
+          <div class="temperature-box">
+            <span> ↓ Low </span>
 
-                <div class="weather-icon" id="weatherIcon">
-                    ☀️
-                </div>
+            <strong id="lowTemp"> 27°C </strong>
+          </div>
+        </div>
+      </section>
 
+      <!-- ================= WEATHER DETAILS ================= -->
 
-                <div class="temperature">
+      <section class="details">
+        <div class="detail-card">
+          <div class="detail-icon">💧</div>
 
-                    <h2 id="temperature">
-                        32°C
-                    </h2>
+          <div>
+            <h3>Humidity</h3>
 
+            <p id="humidity">45%</p>
+          </div>
+        </div>
 
-                    <p id="condition">
-                        Sunny
-                    </p>
+        <div class="detail-card">
+          <div class="detail-icon">💨</div>
 
-                </div>
+          <div>
+            <h3>Wind Speed</h3>
 
-            </div>
+            <p id="wind">12 km/h</p>
+          </div>
+        </div>
 
+        <div class="detail-card">
+          <div class="detail-icon">🌡️</div>
 
+          <div>
+            <h3>Pressure</h3>
 
-            <!-- High / Low -->
+            <p id="pressure">1012 hPa</p>
+          </div>
+        </div>
 
-            <div class="high-low">
+        <div class="detail-card">
+          <div class="detail-icon">👁️</div>
 
-                <div class="temperature-box">
+          <div>
+            <h3>Visibility</h3>
 
-                    <span>
-                        ↑ High
-                    </span>
+            <p id="visibility">10 km</p>
+          </div>
+        </div>
+      </section>
 
-                    <strong id="highTemp">
-                        35°C
-                    </strong>
+      <!-- ================= FORECAST ================= -->
 
-                </div>
+      <section class="forecast-section">
+        <div class="section-title">
+          <h2>7 Day Forecast</h2>
+        </div>
 
+        <div class="forecast-container">
+          <!-- Forecast 1 -->
 
-                <div class="temperature-box">
+          <div class="forecast-card">
+            <h3>Saturday</h3>
 
-                    <span>
-                        ↓ Low
-                    </span>
+            <div class="forecast-icon">☀️</div>
 
-                    <strong id="lowTemp">
-                        27°C
-                    </strong>
+            <strong class="forecast-temp"> 33°C </strong>
 
-                </div>
+            <p>Sunny</p>
+          </div>
 
-            </div>
+          <!-- Forecast 2 -->
 
+          <div class="forecast-card">
+            <h3>Sunday</h3>
 
-        </section>
+            <div class="forecast-icon">🌤️</div>
 
+            <strong class="forecast-temp"> 31°C </strong>
 
+            <p>Partly Cloudy</p>
+          </div>
 
-        <!-- ================= WEATHER DETAILS ================= -->
+          <!-- Forecast 3 -->
 
-        <section class="details">
+          <div class="forecast-card">
+            <h3>Monday</h3>
 
+            <div class="forecast-icon">🌧️</div>
 
-            <div class="detail-card">
+            <strong class="forecast-temp"> 28°C </strong>
 
-                <div class="detail-icon">
-                    💧
-                </div>
+            <p>Rainy</p>
+          </div>
 
-                <div>
+          <!-- Forecast 4 -->
 
-                    <h3>
-                        Humidity
-                    </h3>
+          <div class="forecast-card">
+            <h3>Tuesday</h3>
 
-                    <p id="humidity">
-                        45%
-                    </p>
+            <div class="forecast-icon">☁️</div>
 
-                </div>
+            <strong class="forecast-temp"> 29°C </strong>
 
-            </div>
+            <p>Cloudy</p>
+          </div>
+          <div class="forecast-card">
+            <h3>Wednesday</h3>
 
+            <div class="forecast-icon">☀️</div>
 
+            <strong class="forecast-temp"> 32°C </strong>
 
-            <div class="detail-card">
+            <p>Sunny</p>
+          </div>
+          <div class="forecast-card">
+            <h3>Wednesday</h3>
 
-                <div class="detail-icon">
-                    💨
-                </div>
+            <div class="forecast-icon">☀️</div>
 
-                <div>
+            <strong class="forecast-temp"> 32°C </strong>
 
-                    <h3>
-                        Wind Speed
-                    </h3>
+            <p>Sunny</p>
+          </div>
+          <div class="forecast-card">
+            <h3>Wednesday</h3>
 
-                    <p id="wind">
-                        12 km/h
-                    </p>
+            <div class="forecast-icon">☀️</div>
 
-                </div>
+            <strong class="forecast-temp"> 32°C </strong>
 
-            </div>
-
-
-
-            <div class="detail-card">
-
-                <div class="detail-icon">
-                    🌡️
-                </div>
-
-                <div>
-
-                    <h3>
-                        Pressure
-                    </h3>
-
-                    <p id="pressure">
-                        1012 hPa
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="detail-card">
-
-                <div class="detail-icon">
-                    👁️
-                </div>
-
-                <div>
-
-                    <h3>
-                        Visibility
-                    </h3>
-
-                    <p id="visibility">
-                        10 km
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ================= FORECAST ================= -->
-
-        <section class="forecast-section">
-
-
-            <div class="section-title">
-
-                <h2>
-                    5 Day Forecast
-                </h2>
-
-            </div>
-
-
-
-            <div class="forecast-container">
-
-
-                <!-- Forecast 1 -->
-
-                <div class="forecast-card">
-
-                    <h3>
-                        Saturday
-                    </h3>
-
-                    <div class="forecast-icon">
-                        ☀️
-                    </div>
-
-                    <strong class="forecast-temp">
-                        33°C
-                    </strong>
-
-                    <p>
-                        Sunny
-                    </p>
-
-                </div>
-
-
-
-                <!-- Forecast 2 -->
-
-                <div class="forecast-card">
-
-                    <h3>
-                        Sunday
-                    </h3>
-
-                    <div class="forecast-icon">
-                        🌤️
-                    </div>
-
-                    <strong class="forecast-temp">
-                        31°C
-                    </strong>
-
-                    <p>
-                        Partly Cloudy
-                    </p>
-
-                </div>
-
-
-
-                <!-- Forecast 3 -->
-
-                <div class="forecast-card">
-
-                    <h3>
-                        Monday
-                    </h3>
-
-                    <div class="forecast-icon">
-                        🌧️
-                    </div>
-
-                    <strong class="forecast-temp">
-                        28°C
-                    </strong>
-
-                    <p>
-                        Rainy
-                    </p>
-
-                </div>
-
-
-
-                <!-- Forecast 4 -->
-
-                <div class="forecast-card">
-
-                    <h3>
-                        Tuesday
-                    </h3>
-
-                    <div class="forecast-icon">
-                        ☁️
-                    </div>
-
-                    <strong class="forecast-temp">
-                        29°C
-                    </strong>
-
-                    <p>
-                        Cloudy
-                    </p>
-
-                </div>
-
-
-
-                <!-- Forecast 5 -->
-
-                <div class="forecast-card">
-
-                    <h3>
-                        Wednesday
-                    </h3>
-
-                    <div class="forecast-icon">
-                        ☀️
-                    </div>
-
-                    <strong class="forecast-temp">
-                        32°C
-                    </strong>
-
-                    <p>
-                        Sunny
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
+            <p>Sunny</p>
+          </div>
+        </div>
+      </section>
     </main>
 
-
-
-    <!-- ================= FOOTER ================= -->
-
     <footer class="footer">
-
-        <p>
-            Weather App © 2026
-        </p>
-
+      <p>Weather App © 2026</p>
     </footer>
-
-
 
     <!-- JavaScript -->
 
     <script src="js/script.js"></script>
-
-</body>
-
+  </body>
 </html>
+>

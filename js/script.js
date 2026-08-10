@@ -50,18 +50,12 @@ const visibility =
     document.getElementById("visibility");
 
 
-// ==========================================
-// VARIABLES
-// ==========================================
 
 let isCelsius = true;
 
 let currentWeather = null;
 
 
-// ==========================================
-// UPDATE DATE
-// ==========================================
 
 function updateDate() {
 
@@ -83,10 +77,6 @@ function updateDate() {
 
 updateDate();
 
-
-// ==========================================
-// WEATHER CODE → WEATHER DESCRIPTION
-// ==========================================
 
 function getWeatherInfo(code) {
 
@@ -212,8 +202,6 @@ function getWeatherInfo(code) {
 
 }
 
-
-
 function celsiusToFahrenheit(celsius) {
 
     return Math.round(
@@ -222,16 +210,16 @@ function celsiusToFahrenheit(celsius) {
 
 }
 
-
-
 function formatTemperature(temp) {
 
-    if (temp === null || temp === undefined) {
+    if (
+        temp === null ||
+        temp === undefined
+    ) {
 
         return "--";
 
     }
-
 
     if (isCelsius) {
 
@@ -239,11 +227,9 @@ function formatTemperature(temp) {
 
     }
 
-
     return `${celsiusToFahrenheit(temp)}°F`;
 
 }
-
 
 
 
@@ -316,6 +302,8 @@ async function searchCity() {
             location.longitude;
 
 
+        // Get weather
+
         await getWeather(
             latitude,
             longitude,
@@ -342,6 +330,7 @@ async function searchCity() {
 
 
 
+
 async function getWeather(
     latitude,
     longitude,
@@ -349,7 +338,7 @@ async function getWeather(
 ) {
 
     const weatherURL =
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,surface_pressure,wind_speed_10m&hourly=visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&wind_speed_unit=kmh&forecast_days=5&timezone=auto`;
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,surface_pressure,wind_speed_10m&hourly=visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&wind_speed_unit=kmh&forecast_days=7&timezone=auto`;
 
 
     const response =
@@ -384,7 +373,6 @@ function updateWeather(
 
     currentWeather = data;
 
-
     cityName.textContent =
         `${location.name}, ${location.country}`;
 
@@ -397,8 +385,6 @@ function updateWeather(
         getWeatherInfo(
             current.weather_code
         );
-
-
     temperature.textContent =
         formatTemperature(
             current.temperature_2m
@@ -409,9 +395,9 @@ function updateWeather(
         weatherInfo.condition;
 
 
-
     weatherIcon.textContent =
         weatherInfo.icon;
+
 
 
     humidity.textContent =
@@ -431,18 +417,15 @@ function updateWeather(
             current.surface_pressure
         )} hPa`;
 
-
     highTemp.textContent =
         formatTemperature(
             data.daily.temperature_2m_max[0]
         );
 
-
     lowTemp.textContent =
         formatTemperature(
             data.daily.temperature_2m_min[0]
         );
-
 
     updateForecast(
         data.daily
@@ -458,32 +441,25 @@ function updateWeather(
 
 function updateForecast(daily) {
 
-    const forecastCards =
-        document.querySelectorAll(
-            ".forecast-card"
+    const forecastContainer =
+        document.querySelector(
+            ".forecast-container"
         );
+
+
+    forecastContainer.innerHTML = "";
 
 
     for (
         let i = 0;
-        i < 5;
+        i < 7;
         i++
     ) {
 
-        const card =
-            forecastCards[i];
-
-
-        if (!card) {
-
-            continue;
-
-        }
-
-
         const date =
             new Date(
-                daily.time[i] + "T12:00:00"
+                daily.time[i] +
+                "T12:00:00"
             );
 
 
@@ -502,44 +478,53 @@ function updateForecast(daily) {
             );
 
 
-        const title =
-            card.querySelector("h3");
-
-
-        const icon =
-            card.querySelector(
-                ".forecast-icon"
-            );
-
-
-        const temp =
-            card.querySelector(
-                ".forecast-temp"
-            );
-
-
-        const description =
-            card.querySelector(
-                "p"
-            );
-
-
-        title.textContent =
-            dayName;
-
-
-        icon.textContent =
-            weatherInfo.icon;
-
-
-        temp.textContent =
+   
+        const maxTemperature =
             formatTemperature(
                 daily.temperature_2m_max[i]
             );
 
 
-        description.textContent =
-            weatherInfo.condition;
+
+        const minTemperature =
+            formatTemperature(
+                daily.temperature_2m_min[i]
+            );
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "forecast-card";
+
+        card.innerHTML = `
+
+            <h3>
+                ${dayName}
+            </h3>
+
+            <div class="forecast-icon">
+                ${weatherInfo.icon}
+            </div>
+
+            <strong class="forecast-temp">
+                ${maxTemperature}
+            </strong>
+
+            <p>
+                ${weatherInfo.condition}
+            </p>
+
+            <small>
+                Low: ${minTemperature}
+            </small>
+
+        `;
+
+        forecastContainer.appendChild(
+            card
+        );
 
     }
 
@@ -559,6 +544,7 @@ function updateVisibility(hourly) {
         return;
 
     }
+
 
     const currentHour =
         new Date().getHours();
@@ -594,12 +580,11 @@ function updateVisibility(hourly) {
 
 }
 
-
-
 searchBtn.addEventListener(
     "click",
     searchCity
 );
+
 
 
 cityInput.addEventListener(
@@ -638,11 +623,11 @@ unitBtn.addEventListener(
         }
 
 
+
         if (currentWeather) {
 
             const current =
                 currentWeather.current;
-
 
             const daily =
                 currentWeather.daily;
@@ -705,6 +690,7 @@ themeBtn.addEventListener(
 );
 
 
+
 locationBtn.addEventListener(
     "click",
     function() {
@@ -744,10 +730,8 @@ locationBtn.addEventListener(
                     setLoading(true);
 
 
-                  
-
                     const weatherURL =
-                        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,surface_pressure,wind_speed_10m&hourly=visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&wind_speed_unit=kmh&forecast_days=5&timezone=auto`;
+                        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,surface_pressure,wind_speed_10m&hourly=visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&wind_speed_unit=kmh&forecast_days=7&timezone=auto`;
 
 
                     const response =
@@ -823,6 +807,9 @@ locationBtn.addEventListener(
     }
 );
 
+
+
+
 function setLoading(isLoading) {
 
     if (isLoading) {
@@ -855,7 +842,6 @@ function showError(message) {
 }
 
 
-
 function hideError() {
 
     errorMessage.textContent =
@@ -866,9 +852,9 @@ function hideError() {
 
 }
 
-
 cityInput.value =
     "Lahore";
+
 
 
 searchCity();
